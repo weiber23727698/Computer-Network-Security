@@ -1,10 +1,22 @@
-from public import pk1, pk2
 from pwn import *
-import math
-from Crypto.Util.number import bytes_to_long, long_to_bytes
 
+# context.log_level = 'debug'
 
-p, g, y = pk2['p'], pk2['g'], pk2['y']
+alice = remote('cns.csie.org', 12346)
+bob = remote('cns.csie.org', 12347)
+alice.sendlineafter("Interactive mode (y/n)? ", "y")
+bob.sendlineafter("Interactive mode (y/n)? ", "y")
 
-w = 17638470104933006511749061348233661438649162126412637470965123881064445063547186705151791611202432154236512998382907301164300328019027814744285882805679063630767027636588333407037356396627422228012264368850862196536648289288081455176045
-print(w%(p-1))
+alice.recvuntil("a = ")
+a = f"{alice.recvline()}"[2:-3]
+bob.sendlineafter("a = ", a)
+
+bob.recvuntil("c = ")
+c = f"{bob.recvline()}"[2:-3]
+alice.sendlineafter("c = ", c)
+
+alice.recvuntil("w = ")
+w = f"{alice.recvline()}"[2:-3]
+bob.sendlineafter("w = ", w)
+
+print(bob.recvline())

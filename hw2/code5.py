@@ -10,25 +10,40 @@ pk1 = {
 }
 
 def flag1():
-    p, g, y = pk1['p'], pk1['g'], pk1["y"]
-    
+    alice = remote('cns.csie.org', 12346)
+    bob = remote('cns.csie.org', 12347)
+    alice.sendlineafter("Interactive mode (y/n)? ", "y")
+    bob.sendlineafter("Interactive mode (y/n)? ", "y")
 
+    alice.recvuntil("a = ")
+    a = f"{alice.recvline()}"[2:-3]
+    bob.sendlineafter("a = ", a)
+
+    bob.recvuntil("c = ")
+    c = f"{bob.recvline()}"[2:-3]
+    alice.sendlineafter("c = ", c)
+
+    alice.recvuntil("w = ")
+    w = f"{alice.recvline()}"[2:-3]
+    bob.sendlineafter("w = ", w)
+
+    print(bob.recvline())
+    
 def flag2():
     r = remote('cns.csie.org', 12346)
     r.sendlineafter("Interactive mode (y/n)? ", "y")
     r.sendlineafter("c = ", "0")
     r.recvuntil("w = ")
     w0 = int(f"{r.recvline()}"[2:-3])
-    print(w0)
-    r.sendlineafter("c = ", "stop") # stop the connection
+    r.close() # stop the connection
 
     r = remote('cns.csie.org', 12346)
     r.sendlineafter("Interactive mode (y/n)? ", "y")
     r.sendlineafter("c = ", "1")
     r.recvuntil("w = ")
     w1 = int(f"{r.recvline()}"[2:-3])
-    print(w1)
-    r.sendlineafter("c = ", "stop") # stop the connections
+    r.close() # stop the connections
+    
     print("=======================================================")
     print(f"flag2: {long_to_bytes(w1-w0)}")
     print("=======================================================")
