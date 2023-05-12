@@ -35,7 +35,7 @@ def flag1():
 
     progress = tqdm(total=int(101))
     r.recvuntil("Wait for 3 seconds to start ...")
-    while len(packets) < 100:
+    while len(packets) < 101:
         p = r.recvline()
         if len(p) > 5:
             p = p.decode()

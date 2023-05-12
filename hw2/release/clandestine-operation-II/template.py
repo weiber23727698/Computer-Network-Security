@@ -23,13 +23,21 @@ def read_seurity_buffer(input_bytes):
     return length, allocated_size, offset
 
 def gen_type1_msg():
-    # TODO
-    pass
+    msg = header_signature() + header_type(1) + header_flags(0x60080014)
+    return msg
 
-def parse_type2_msg():
+def parse_type2_msg(msg):
     # TODO
-    pass
+    target_name_buf = msg[24:40]
+    flag = msg[40:48]
+    challenge = msg[48:64]
+    context = msg[64:80]
+    target_info_buf = msg[80:96]
+    return target_name_buf, flag, challenge, context, target_info_buf
 
 def gen_type3_msg():
     # TODO
-    pass
+    msg = header_signature() + header_type(3)
+    return msg
+
+# print(header_flags(0x608a0015).hex())

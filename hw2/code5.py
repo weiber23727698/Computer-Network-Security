@@ -1,5 +1,4 @@
 from pwn import *
-import math
 from Crypto.Util.number import long_to_bytes
 from argparse import ArgumentParser
 
@@ -48,6 +47,13 @@ def flag2():
     print(f"flag2: {long_to_bytes(w1-w0)}")
     print("=======================================================")
 
+def flag3():
+    # reference: https://shrek.unideb.hu/~tengely/crypto/section-6.html#p-204-part9
+    w = 1995135457311837329338013220674023065119097253499626394183669323611116768755869053
+    print("=======================================================")
+    print(f"flag3: {long_to_bytes(w)}")
+    print("=======================================================")
+
 def main():
     parser = ArgumentParser(description='P5 for CNS hw2')
     parser.add_argument("--problem", type = int, default=1) # E_in or E_out
@@ -57,6 +63,8 @@ def main():
         flag1()
     elif args.problem == 2:
         flag2()
+    elif args.problem == 3:
+        flag3()
 
 if __name__ == "__main__":
     main()

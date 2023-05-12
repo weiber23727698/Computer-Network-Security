@@ -1,7 +1,7 @@
 import json
 import secret
 from DB import users_ntlm_hashes
-from NTLM_package import *
+from NTLM_package import * # NTLM_package
 
 def shell(ntlm_hash):
     while True:

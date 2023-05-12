@@ -1,0 +1,24 @@
+4e544c4d53535000 # NTML
+02000000 # type2
+0300030038000000 # Target Name
+15008a60 # flag
+328c47cc1a85c193 # challenge (different)
+0000000000000000 # context
+270027003b000000 # Target Information
+ffffffff0000000f434e5301
+000300434e5304000800637369652e6f726703000c00636e732e637369652e6f7267000000000a
+-------------------------
+Negotiate Unicode (0x00000001)
+Request Target (0x00000004)
+
+--------------------------
+
+0	NTLMSSP Signature	    Null-terminated ASCII "NTLMSSP" (0x4e544c4d53535000)
+8	NTLM Message Type	    long (0x03000000)
+12	LM/LMv2 Response	    security buffer (response to challenge)
+20	NTLM/NTLMv2 Response    security buffer (response to challenge)
+28	Target Name	            security buffer 
+36	User Name	            security buffer (user name in unicode)
+44	Workstation Name	    security buffer (client workstation's name)
+
+*

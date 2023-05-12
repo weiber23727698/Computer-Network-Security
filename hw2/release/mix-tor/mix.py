@@ -3,7 +3,7 @@ import random
 from tqdm import tqdm
 from lib import *
 
-# context.log_level = 'debug'
+context.log_level = 'debug'
 
 r = remote('cns.csie.org', 12804)
 public_key = [None for i in range(4)]
@@ -31,24 +31,24 @@ sk = list(map(int, sk.split(",")))
 ## store incoming packets
 packets = []
 
-progress = tqdm(total=int(101))
+progress = tqdm(total=int(300))
 r.recvuntil("Wait for 3 seconds to start ...")
-while len(packets) < 101:
+while len(packets) < 300:
     p = r.recvline()
     if len(p) > 5:
         p = p.decode()
         message = bytes.fromhex(p)
         if len(message) != 400:
+            print(message)
             continue
         new_packet = Packet(message)
         content = new_packet.decrypt_server(sk)
         packets.append((content[0], content[1].data.hex()))
         progress.update(1)
+
 random.shuffle(packets)
 
 ## send
-count = 0
-for i, packet in enumerate(packets):
-    r.sendline(f"({packet[0]}, {packet[1]})")
-
+for i in range(len(packets)):
+    r.sendline(f"({packets[i][0]}, {packets[i][1]})")
 print(r.recvline())
