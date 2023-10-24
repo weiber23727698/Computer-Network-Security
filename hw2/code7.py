@@ -89,8 +89,8 @@ def flag2():
 
 
 def main():
-    parser = ArgumentParser(description='P5 for CNS hw2')
-    parser.add_argument("--problem", type = int, default=1) # E_in or E_out
+    parser = ArgumentParser(description='P7 for CNS hw2')
+    parser.add_argument("--problem", type = int, default=1)
     args = parser.parse_args()
 
     if args.problem == 1:
